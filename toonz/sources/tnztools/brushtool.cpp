@@ -1,7 +1,7 @@
 
 
 #include "brushtool.h"
-
+#include <map>
 // TnzTools includes
 #include "tools/toolhandle.h"
 #include "tools/toolutils.h"
@@ -26,8 +26,13 @@
 #include "toonz/txshsimplelevel.h"
 #include "toonz/toonzimageutils.h"
 #include "toonz/palettecontroller.h"
+#include "toonz/tpalettehandle.h"
 #include "toonz/stage2.h"
+<<<<<<< HEAD
 #include "toonz/preferences.h"
+=======
+#include "toonz/animationautocomplete.h"
+>>>>>>> AnimAutoCompl2/AnimationAutoComplete
 
 // TnzCore includes
 #include "tstream.h"
@@ -35,10 +40,17 @@
 #include "tvectorimage.h"
 #include "tenv.h"
 #include "tregion.h"
+<<<<<<< HEAD
 #include "tinbetween.h"
 
+=======
+#include "tstroke.h"
+#include "tvectorimage.h"
+>>>>>>> AnimAutoCompl2/AnimationAutoComplete
 #include "tgl.h"
 #include "trop.h"
+#include "drawutil.h"
+#include "tvectorbrushstyle.h"
 
 // Qt includes
 #include <QPainter>
@@ -886,6 +898,8 @@ BrushTool::BrushTool(std::string name, int targetType)
     m_prop[1].bind(m_joinStyle);
     m_prop[1].bind(m_miterJoinLimit);
   }
+
+  m_animationAutoComplete = new AnimationAutoComplete();
 }
 
 //-------------------------------------------------------------------------------------------------------
@@ -1171,7 +1185,7 @@ void BrushTool::leftButtonDown(const TPointD &pos, const TMouseEvent &e) {
   int col   = app->getCurrentColumn()->getColumnIndex();
   m_isPath  = app->getCurrentObject()->isSpline();
   m_enabled = col >= 0 || m_isPath;
-  // todo: gestire autoenable
+  // : gestire autoenable
   if (!m_enabled) return;
   if (!m_isPath) {
     m_currentColor = TPixel32::Black;
@@ -1544,6 +1558,7 @@ void BrushTool::leftButtonUp(const TPointD &pos, const TMouseEvent &e) {
                                          // riconosciuti come speciali di
                                          // autoclose proprio dal fatto che
                                          // hanno 1 solo chunk.
+<<<<<<< HEAD
       stroke->insertControlPoints(0.5);
     if (m_frameRange.getIndex()) {
       if (m_firstFrameId == -1) {
@@ -1594,6 +1609,86 @@ void BrushTool::leftButtonUp(const TPointD &pos, const TMouseEvent &e) {
           m_firstFrameId    = currentId;
           m_firstFrameRange = false;
         }
+=======
+	stroke->insertControlPoints(0.5);
+
+	m_animationAutoComplete->addStroke(stroke);
+
+	while(bullshitStrokes)
+	{
+		// I don't know why -2 but it works
+		vi.getPointer()->deleteStroke(vi.getPointer()->getStrokeCount() - 2);
+		bullshitStrokes--;
+	}
+
+	synthesizedStrokes = m_animationAutoComplete->getSynthesizedStrokes();
+
+    // draws synthesized strokes
+    for (auto stroke : synthesizedStrokes)
+    {
+        stroke->stroke->setStyle(3);
+        addStrokeToImage(getApplication(), vi, stroke->stroke, m_breakAngles.getValue(),
+                         m_isFrameCreated, m_isLevelCreated);
+		bullshitStrokes++;
+    }
+
+#ifdef DEBUGGING
+#ifdef SHOW_MATCHING_STROKE
+	if (m_animationAutoComplete->matchedStroke)
+    {
+		m_animationAutoComplete->matchedStroke->stroke->setStyle(2);
+		addStrokeToImage(getApplication(), vi, m_animationAutoComplete->matchedStroke->stroke, m_breakAngles.getValue(),
+                         m_isFrameCreated, m_isLevelCreated);
+		bullshitStrokes++;
+    }
+#endif
+#ifdef SHOW_PAIR_LINES
+    std::vector<TStroke*> similarPairLines = m_animationAutoComplete->m_similarPairLines;
+
+    // draw lines between similar pair strokes
+    for (auto stroke : similarPairLines)
+    {
+        stroke->setStyle(2);
+        addStrokeToImage(getApplication(), vi, stroke, m_breakAngles.getValue(),
+                         m_isFrameCreated, m_isLevelCreated);
+		bullshitStrokes++;
+		if (!bullshitStrokes)
+			assert(bullshitStrokes);
+    }
+#endif // show matching stroke
+#ifdef SHOW_PAIR_STROKES
+	std::vector<TStroke*> pairStrokes = m_animationAutoComplete->pairStrokes;
+
+	for (auto stroke : pairStrokes)
+	{
+		stroke->setStyle(2);
+		addStrokeToImage(getApplication(), vi, stroke, m_breakAngles.getValue(),
+						 m_isFrameCreated, m_isLevelCreated);
+		bullshitStrokes++;
+	}
+#endif
+    //TODO: remove at production
+#ifdef SHOW_SPACE_VICINITY
+	std::vector<TStroke*> spaceVicinities = m_animationAutoComplete->drawSpaceVicinity(stroke);
+	for (auto i : spaceVicinities)
+	{
+		addStrokeToImage(getApplication(), vi, i, m_breakAngles.getValue(),
+						 m_isFrameCreated, m_isLevelCreated);
+		bullshitStrokes++;
+	}
+#endif
+
+#ifdef SHOW_NORMALS
+   std::vector<TStroke*> normal = m_animationAutoComplete->drawNormalStrokes(stroke);
+   for (auto stroke : normal)
+   {
+	   addStrokeToImage(getApplication(), vi, stroke, m_breakAngles.getValue(),
+						m_isFrameCreated, m_isLevelCreated);
+	   bullshitStrokes++;
+   }
+#endif
+#endif // debugging
+>>>>>>> AnimAutoCompl2/AnimationAutoComplete
 
         if (application && !e.isCtrlPressed()) {
           if (application->getCurrentFrame()->isEditingScene()) {

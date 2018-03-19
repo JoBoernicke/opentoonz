@@ -7,15 +7,22 @@
 #include "tproperty.h"
 #include "trasterimage.h"
 #include "ttoonzimage.h"
+<<<<<<< HEAD
 #include "tstroke.h"
+=======
+#include "tcurves.h"
+
+>>>>>>> AnimAutoCompl2/AnimationAutoComplete
 #include "toonz/strokegenerator.h"
 
 #include "tools/tool.h"
 #include "tools/cursors.h"
+#include "tstroke.h"
 
 #include <QCoreApplication>
 #include <QRadialGradient>
 
+#include <unordered_set>
 //--------------------------------------------------------------
 
 //  Forward declarations
@@ -24,7 +31,8 @@ class TTileSetCM32;
 class TTileSaverCM32;
 class RasterStrokeGenerator;
 class BluredBrush;
-
+class AnimationAutoComplete;
+class StrokeWithNeighbours;
 //--------------------------------------------------------------
 
 //************************************************************************
@@ -107,6 +115,8 @@ private:
   std::vector<TThickPoint> m_rawPoints;
   std::vector<TThickPoint> m_outputPoints;
 };
+
+
 //************************************************************************
 //    Brush Tool declaration
 //************************************************************************
@@ -118,6 +128,11 @@ public:
   BrushTool(std::string name, int targetType);
 
   ToolType getToolType() const override { return TTool::LevelWriteTool; }
+
+  std::vector<StrokeWithNeighbours*> synthesizedStrokes;
+
+  // TODO: remove at production
+  int bullshitStrokes = 0;
 
   ToolOptionsBox *createOptionsBox() override;
 
@@ -188,7 +203,13 @@ protected:
   StrokeGenerator m_track;
   StrokeGenerator m_rangeTrack;
   RasterStrokeGenerator *m_rasterTrack;
+<<<<<<< HEAD
   TStroke *m_firstStroke;
+=======
+
+  AnimationAutoComplete *m_animationAutoComplete;
+
+>>>>>>> AnimAutoCompl2/AnimationAutoComplete
   TTileSetCM32 *m_tileSet;
   TTileSaverCM32 *m_tileSaver;
   TFrameId m_firstFrameId, m_veryFirstFrameId;

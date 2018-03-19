@@ -161,6 +161,7 @@ set(MOC_HEADERS
 set(HEADERS ${MOC_HEADERS})
 
 set(SOURCES
+    animationautocomplete.cpp
     autoadjust.cpp
     autoclose.cpp
     autopos.cpp
@@ -179,6 +180,7 @@ set(SOURCES
     fxdag.cpp
     glrasterpainter.cpp
     hook.cpp
+    hungarian.cpp
     ikengine.cpp
     ikjacobian.cpp
     iknode.cpp

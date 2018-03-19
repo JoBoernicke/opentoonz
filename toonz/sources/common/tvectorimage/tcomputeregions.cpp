@@ -970,10 +970,16 @@ void markDeadIntersections(VIList<Intersection> &intList, Intersection *p) {
   if (!p1) return;
 
   if (p->m_numInter == 1) {
+<<<<<<< HEAD
     while (p1 && !!p1->m_nextIntersection) {
       p1 = p1->next();
     }
     // assert(p1);
+=======
+    while (p1 && !!p1->m_nextIntersection) p1 = p1->next();
+    //TO DO Remove Comment At Production
+    //assert(p1);
+>>>>>>> AnimAutoCompl2/AnimationAutoComplete
     if (!p1) return;
 
     Intersection *nextInt         = p1->m_nextIntersection;
