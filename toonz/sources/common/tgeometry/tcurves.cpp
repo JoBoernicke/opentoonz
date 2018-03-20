@@ -332,8 +332,7 @@ int TQuadratic::getY(double y, double &y0, double &y1) const {
 //=============================================================================
 TPointD TCubic::getPoint(double t) const {
   double s = 1 - t;
-  return m_p0 * s * s * s + 3 * t * s * (s * m_p1 + t * m_p2) +
-         t * t * t * m_p3;
+  return m_p0 * s * s * s + 3 * t * s * (s * m_p1 + t * m_p2) +  t * t * t * m_p3;
 }
 //-----------------------------------------------------------------------------
 TPointD TCubic::getSpeed(double t) const {

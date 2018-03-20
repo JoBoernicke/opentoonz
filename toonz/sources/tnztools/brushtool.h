@@ -7,12 +7,9 @@
 #include "tproperty.h"
 #include "trasterimage.h"
 #include "ttoonzimage.h"
-<<<<<<< HEAD
 #include "tstroke.h"
-=======
 #include "tcurves.h"
-
->>>>>>> AnimAutoCompl2/AnimationAutoComplete
+#include "toonz/animationautocomplete.h"
 #include "toonz/strokegenerator.h"
 
 #include "tools/tool.h"
@@ -203,13 +200,10 @@ protected:
   StrokeGenerator m_track;
   StrokeGenerator m_rangeTrack;
   RasterStrokeGenerator *m_rasterTrack;
-<<<<<<< HEAD
   TStroke *m_firstStroke;
-=======
 
   AnimationAutoComplete *m_animationAutoComplete;
 
->>>>>>> AnimAutoCompl2/AnimationAutoComplete
   TTileSetCM32 *m_tileSet;
   TTileSaverCM32 *m_tileSaver;
   TFrameId m_firstFrameId, m_veryFirstFrameId;

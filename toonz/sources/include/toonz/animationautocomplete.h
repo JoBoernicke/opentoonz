@@ -28,7 +28,7 @@ You must enable one or more of the debugging macros below. ie. SHOW_TANGENT_LINE
 //    Detects repetitions in strokes within/across frames and predicts
 //    the next stroke(s) accordingly.
 //************************************************************************
-typedef TThickQuadratic* SamplePoint;
+typedef const TThickQuadratic* SamplePoint;
 
 class StrokeWithNeighbours;
 

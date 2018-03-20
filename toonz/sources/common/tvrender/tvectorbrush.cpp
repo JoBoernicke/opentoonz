@@ -222,8 +222,7 @@ void StrokeOutlinizationData::buildPoint(const CenterlinePoint &p, bool pNextD,
 
         \ _   \         The path stroke with centerline point C has 2 outward
      \      \  \        directions (prevD and nextD), which may be different.
-      \      |* \       Therefore, there may also be 2 different envelope
-   directions
+      \      |* \       Therefore, there may also be 2 different envelope    directions
        \   * .   \      from C (the *s in the drawing).
         C    .    |     When the brush stroke 'hits' one envelope direction, it
        /   * .   /      transfers on the other e.d., and continues on that side.

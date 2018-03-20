@@ -28,11 +28,9 @@
 #include "toonz/palettecontroller.h"
 #include "toonz/tpalettehandle.h"
 #include "toonz/stage2.h"
-<<<<<<< HEAD
-#include "toonz/preferences.h"
-=======
 #include "toonz/animationautocomplete.h"
->>>>>>> AnimAutoCompl2/AnimationAutoComplete
+#include "toonz/preferences.h"
+#include "toonz/animationautocomplete.h"
 
 // TnzCore includes
 #include "tstream.h"
@@ -40,13 +38,10 @@
 #include "tvectorimage.h"
 #include "tenv.h"
 #include "tregion.h"
-<<<<<<< HEAD
 #include "tinbetween.h"
 
-=======
 #include "tstroke.h"
 #include "tvectorimage.h"
->>>>>>> AnimAutoCompl2/AnimationAutoComplete
 #include "tgl.h"
 #include "trop.h"
 #include "drawutil.h"
@@ -1558,7 +1553,6 @@ void BrushTool::leftButtonUp(const TPointD &pos, const TMouseEvent &e) {
                                          // riconosciuti come speciali di
                                          // autoclose proprio dal fatto che
                                          // hanno 1 solo chunk.
-<<<<<<< HEAD
       stroke->insertControlPoints(0.5);
     if (m_frameRange.getIndex()) {
       if (m_firstFrameId == -1) {
@@ -1609,7 +1603,6 @@ void BrushTool::leftButtonUp(const TPointD &pos, const TMouseEvent &e) {
           m_firstFrameId    = currentId;
           m_firstFrameRange = false;
         }
-=======
 	stroke->insertControlPoints(0.5);
 
 	m_animationAutoComplete->addStroke(stroke);
@@ -1688,7 +1681,6 @@ void BrushTool::leftButtonUp(const TPointD &pos, const TMouseEvent &e) {
    }
 #endif
 #endif // debugging
->>>>>>> AnimAutoCompl2/AnimationAutoComplete
 
         if (application && !e.isCtrlPressed()) {
           if (application->getCurrentFrame()->isEditingScene()) {

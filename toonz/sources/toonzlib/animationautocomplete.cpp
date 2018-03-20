@@ -4,7 +4,7 @@
 #include "drawutil.h"
 
 #include "toonz/hungarian.h"
-
+#include <iterator>
 #include <toonz/strokegenerator.h>
 
 void AnimationAutoComplete::addStroke(TStroke* stroke)
@@ -47,12 +47,12 @@ bool AnimationAutoComplete::strokeSelfLooping(TStroke* stroke)
 {
 	int count = stroke->getChunkCount();
 	double range = 8;
-	TThickQuadratic* lastPointHolder=stroke->getChunk(count-1);
+	const TThickQuadratic* lastPointHolder =stroke->getChunk(count - 1);
 
 	TPointD lastpoint=lastPointHolder->getP2();
 	for (int i =0;i<count-1;i++)
 	{
-		TThickQuadratic *currentPointHolder=stroke->getChunk(i);
+		const TThickQuadratic *currentPointHolder=stroke->getChunk(i);
 		TPointD currentPoint=currentPointHolder->getP0();
 		//calculate the distance
 		double x=lastpoint.x-currentPoint.x;
@@ -95,7 +95,7 @@ void AnimationAutoComplete::getNeighbours(StrokeWithNeighbours* stroke)
 	int chuckCount = stroke->stroke->getChunkCount();
 	for (int i = 0; i < chuckCount; i++)
 	{
-		PointWithStroke point(stroke->stroke->getChunk(i), stroke, i);
+		PointWithStroke point(stroke->getChunk(i), stroke, i);
 		if (i == chuckCount - 1)
 			point.setLastPoint(true);
 		else
@@ -119,7 +119,7 @@ std::vector<StrokeWithNeighbours*> AnimationAutoComplete::getNeighbours(PointWit
 		// we used to exclude the stroke that is being compared from the neighbours
 		// now we don't. we don't see any impact on accuracy
 		for(int j = 0; j < stroke->getChunkCount(); j++)
-			if(withinSpaceVicinity(point.point, stroke->getChunk(j)))
+			if(withinSpaceVicinity(point.point, stroke->getChunk(j)->getPoint))
 			{
 				neighbours.push_back(m_strokesWithNeighbours[i]);
 				m_strokesWithNeighbours[i]->neighbours.insert(point.stroke); // if you're my neighbour, then I'm your neighbour
@@ -923,8 +923,9 @@ StrokeWithNeighbours* AnimationAutoComplete::predictionPositionUpdate(StrokeWith
 	std::vector<TPointD>predectedStrock;
 	for(int i = 0; i < count; i++)
 	{
-		sampleCurrentStroke = currentStroke->stroke->getChunk(i);
-		sampleNextStroke = nextStroke->stroke->getChunk(i);
+//		sampleCurrentStroke = currentStroke->stroke->getChunk(i);
+//		sampleNextStroke = nextStroke->stroke->getChunk(i);
+	
 		//std::vector<TPointD> matrixA;
 		TPointD subtractionMatrix = sampleNextStroke->getP0() - sampleCurrentStroke->getP0();
 		TPointD Segma;
@@ -1042,7 +1043,7 @@ std::vector<SimilarPairPoint> AnimationAutoComplete::getSimilarPairPoints(Stroke
 			point1->stroke = stroke1;
 			PointWithStroke* point2 = new PointWithStroke();
 			point2->index = j;
-			point2->point = stroke2->stroke->getChunk(j);
+			point2->point = stroke2->stroke->getChunk(j)->getPoint;
 			point2->stroke = stroke2;
 			double pointsimilar = pointsSimilarity(point1, point2);
 			tmp.push_back(pointsimilar);
@@ -1063,12 +1064,12 @@ std::vector<SimilarPairPoint> AnimationAutoComplete::getSimilarPairPoints(Stroke
 			PointWithStroke* point1 = new PointWithStroke();
 			point1->index = i;
 			point1->stroke = stroke1;
-			point1->point = stroke1->stroke->getChunk(point1->index);
+			point1->point = stroke1->stroke->getChunk(point1->index)->getPoint;
 
 			PointWithStroke* point2 = new PointWithStroke();
 			point2->index = assignment[i];
 			point2->stroke = stroke2;
-			point2->point = stroke2->stroke->getChunk(point2->index);
+			point2->point = stroke2->stroke->getChunk(point2->index)->getPoint;
 
 			p.point1 = point1;
 			p.point2 = point2;
@@ -1111,7 +1112,7 @@ PointWithStroke StrokeWithNeighbours::getCentralPointWithStroke()
 	if (n == 1)
 		central1.index = 0;
 
-	central1.point = stroke->getChunk(central1.index);
+	central1.point = stroke->getChunk(central1.index)->getPoint;
 	return central1;
 }
 
@@ -1128,7 +1129,7 @@ TPointD StrokeWithNeighbours::getTPointD(int i)
 	return stroke->getChunk(i)->getP0();
 }
 
-SamplePoint StrokeWithNeighbours::getChunk(int i)
+SamplePoint StrokeWithNeighbours::getChunk(int i) 
 {
 	return stroke->getChunk(i);
 }
@@ -1147,7 +1148,7 @@ bool StrokeWithNeighbours::isLastPoint(int i)
 
 	return false;
 }
-
+/**
 void StrokeWithNeighbours::setPoint(int i, TPointD newPoint)
 {
 	if (isLastPoint(i))
@@ -1155,6 +1156,7 @@ void StrokeWithNeighbours::setPoint(int i, TPointD newPoint)
 	else
 		stroke->getChunk(i)->setP0(newPoint);
 }
+*/
 
 void PointWithStroke::setLastPoint(bool value)
 {
@@ -1176,7 +1178,7 @@ PointWithStroke PointWithStroke::getPrevious()
 
 	return PointWithStroke(stroke->getChunk(index-1), stroke, index-1);
 }
-
+/*
 void PointWithStroke::normalizeP1()
 {
 	if (stroke->isLastPoint(index))
@@ -1188,7 +1190,7 @@ void PointWithStroke::normalizeP1()
 
 	point->setP1(P1);
 }
-
+*/
 PointWithStroke::PointWithStroke()
 {
 	index = -1;
