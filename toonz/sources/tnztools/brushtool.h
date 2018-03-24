@@ -9,7 +9,7 @@
 #include "ttoonzimage.h"
 #include "tstroke.h"
 #include "tcurves.h"
-#include "toonz/animationautocomplete.h"
+#include "toonz/animationautocomplete.h" 
 #include "toonz/strokegenerator.h"
 
 #include "tools/tool.h"
@@ -177,6 +177,8 @@ public:
   void checkGuideSnapping(bool beforeMousePress);
   void checkStrokeSnapping(bool beforeMousePress);
 
+  AnimationAutoComplete *m_animationAutoComplete;
+
 protected:
   TPropertyGroup m_prop[2];
 
@@ -202,7 +204,6 @@ protected:
   RasterStrokeGenerator *m_rasterTrack;
   TStroke *m_firstStroke;
 
-  AnimationAutoComplete *m_animationAutoComplete;
 
   TTileSetCM32 *m_tileSet;
   TTileSaverCM32 *m_tileSaver;

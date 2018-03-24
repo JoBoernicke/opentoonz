@@ -1,11 +1,11 @@
 #ifndef ANIMATIONAUTOCOMPLETE_H
 #define ANIMATIONAUTOCOMPLETE_H
-
+//TESTTESTTEST
 /*!
 It is a macro to be used to enable debugging parts of the code. It has no effect in itself.
 You must enable one or more of the debugging macros below. ie. SHOW_TANGENT_LINES
 */
-//#define DEBUGGING
+#define DEBUGGING
 
 //#define ODAY_SYNTHESIS
 #define ADAM_SYSTHESIS
@@ -28,7 +28,7 @@ You must enable one or more of the debugging macros below. ie. SHOW_TANGENT_LINE
 //    Detects repetitions in strokes within/across frames and predicts
 //    the next stroke(s) accordingly.
 //************************************************************************
-typedef const TThickQuadratic* SamplePoint;
+typedef TThickQuadratic* SamplePoint;
 
 class StrokeWithNeighbours;
 
